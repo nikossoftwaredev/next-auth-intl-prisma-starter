@@ -8,9 +8,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ThemeSwitcher } from "@/components/example/ThemeSwitcher";
-import { LoginButton } from "@/components/example/login-button";
-import { LanguageSwitcher } from "@/components/example/language-switcher";
+import { ThemeSwitcher } from "@/components/examples/ThemeSwitcher";
+import { LoginButton } from "@/components/examples/login-button";
+import { LanguageSwitcher } from "@/components/examples/language-switcher";
 import { TodoList } from "@/components/examples/todo-list";
 import { BasePageProps } from "@/types/page-props";
 import {
