@@ -9,7 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ThemeSwitcher } from "@/components/example/ThemeSwitcher";
+import { LoginButton } from "@/components/example/login-button";
 import { BasePageProps } from "@/types/page-props";
 
 export default async function Home({ params }: BasePageProps) {
@@ -20,8 +21,9 @@ export default async function Home({ params }: BasePageProps) {
 
   return (
     <div className="flex min-h-screen items-center justify-center p-8">
-      <div className="absolute top-4 right-4">
-        <ModeToggle />
+      <div className="absolute top-4 right-4 flex items-center gap-4">
+        <LoginButton />
+        <ThemeSwitcher />
       </div>
       <main className="flex flex-col items-center gap-8 max-w-2xl w-full">
         <div className="text-center">

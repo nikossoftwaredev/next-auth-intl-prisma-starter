@@ -22,6 +22,7 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
 
 ### Tech Stack
 - **Next.js 16.1.1** with App Router and React Server Components
+- **NextAuth.js 4.24** for authentication (Google OAuth)
 - **next-intl 4.7.0** for internationalization (en, el locales)
 - **Tailwind CSS 4** with CSS variables and modern color space
 - **shadcn/ui** components (New York style)
@@ -29,8 +30,11 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
 
 ### Project Structure
 - `app/[locale]/` - Dynamic locale-based routing
+- `app/api/auth/[...nextauth]/` - NextAuth API routes
 - `components/ui/` - shadcn/ui components
+- `components/auth/` - Authentication components
 - `lib/i18n/` - Internationalization configuration
+- `lib/auth/` - NextAuth configuration
 - `lib/general/` - General utilities (utils.ts)
 - `messages/` - Translation files (en.json, el.json)
 - `proxy.ts` - Middleware for i18n routing (not middleware.ts)
@@ -154,9 +158,28 @@ After completing work on any file:
 - Review implementation holistically
 - Prefer native solutions over reinventing the wheel
 
+## Authentication Setup
+
+### NextAuth Configuration
+- **Provider**: Google OAuth configured in `lib/auth/auth.ts`
+- **Session Management**: SessionProvider wraps the app in `components/providers.tsx`
+- **Environment Variables Required**:
+  - `NEXTAUTH_SECRET`: Secret key for JWT encryption
+  - `NEXTAUTH_URL`: Application URL (http://localhost:3000 for development)
+  - `GOOGLE_CLIENT_ID`: From Google Cloud Console
+  - `GOOGLE_CLIENT_SECRET`: From Google Cloud Console
+
+### Google OAuth Setup
+1. Go to [Google Cloud Console](https://console.developers.google.com/apis/credentials)
+2. Create a new OAuth 2.0 Client ID
+3. Set Authorized redirect URIs:
+   - Development: `http://localhost:3000/api/auth/callback/google`
+   - Production: `https://your-domain.com/api/auth/callback/google`
+4. Copy Client ID and Client Secret to `.env.local`
+
 ## Important Notes
 
-- **No Auth/Database Yet**: Despite the project name, NextAuth and Prisma are not implemented
 - **PNPM Required**: This project uses PNPM workspaces
 - **Locale Validation**: Layout validates locale and returns 404 for invalid locales
 - **Static Generation**: Uses `generateStaticParams()` for all locale variants
+- **Prisma Not Implemented**: Despite the project name, Prisma is not yet configured

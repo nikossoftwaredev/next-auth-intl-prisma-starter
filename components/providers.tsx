@@ -1,7 +1,8 @@
 "use client";
 
 import { NextIntlClientProvider, AbstractIntlMessages } from "next-intl";
-import { ThemeProvider } from "./theme-provider";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
 
 type Props = {
   children: React.ReactNode;
@@ -9,17 +10,19 @@ type Props = {
   locale: string;
 };
 
-export function Providers({ children, messages, locale }: Props) {
+export const Providers = ({ children, messages, locale }: Props) => {
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-    >
-      <NextIntlClientProvider messages={messages} locale={locale}>
-        {children}
-      </NextIntlClientProvider>
-    </ThemeProvider>
+    <SessionProvider>
+      <NextThemesProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          {children}
+        </NextIntlClientProvider>
+      </NextThemesProvider>
+    </SessionProvider>
   );
-}
+};
