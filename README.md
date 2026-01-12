@@ -1,17 +1,30 @@
 # Next.js Auth + Internationalization + Prisma Starter
 
-A modern full-stack application built with Next.js 16, NextAuth.js, Prisma ORM, and next-intl for internationalization.
+A modern full-stack starter template built with Next.js 16, NextAuth.js, Prisma ORM, and next-intl for internationalization.
+
+## 🚀 Quick Start
+
+### Use this template
+
+Click the **"Use this template"** button on GitHub or use this direct link:
+
+[![Use this template](https://img.shields.io/badge/Use%20this%20template-2ea44f?style=for-the-badge)](https://github.com/nikossoftwaredev/next-auth-intl-prisma-starter/generate)
+
+This will create a new repository in your GitHub account with all the starter code.
 
 ## Features
 
-- ✅ **Authentication** with NextAuth.js (Google OAuth)
-- ✅ **Database** integration with Prisma ORM (PostgreSQL)
-- ✅ **Internationalization** with next-intl (English & Greek)
-- ✅ **Todo CRUD** functionality with user-specific data
-- ✅ **Dark Mode** support with next-themes
-- ✅ **UI Components** from shadcn/ui
-- ✅ **TypeScript** with strict mode
-- ✅ **Server Actions** for secure database operations
+- 🔐 **Authentication** with NextAuth.js (Google OAuth, easily extendable)
+- 🗄️ **Database** integration with Prisma ORM + Supabase (PostgreSQL)
+- 🌍 **Internationalization** with next-intl (English, Greek & Spanish)
+- 📝 **Todo CRUD** functionality with user-specific data
+- 🌙 **Dark/Light Mode** with next-themes and system preference detection
+- 🎨 **UI Components** from shadcn/ui (Radix UI + Tailwind CSS)
+- 📘 **TypeScript** with strict mode for better DX
+- ⚡ **Server Actions** for secure database operations
+- 🚀 **Next.js 15** with App Router and Turbopack
+- 📦 **PNPM** for fast, efficient package management
+- 🔧 **ESLint & Prettier** configured with best practices
 
 ## Prerequisites
 
@@ -21,10 +34,19 @@ A modern full-stack application built with Next.js 16, NextAuth.js, Prisma ORM, 
 
 ## Getting Started
 
-### 1. Clone the repository
+### 1. Clone the repository or use the template
 
+**Option A: Use as a template (recommended)**
+1. Click the "Use this template" button on GitHub
+2. Clone your new repository:
 ```bash
-git clone <your-repo-url>
+git clone <your-new-repo-url>
+cd <your-repo-name>
+```
+
+**Option B: Clone directly**
+```bash
+git clone https://github.com/nikossoftwaredev/next-auth-intl-prisma-starter.git
 cd next-auth-intl-prisma-starter
 ```
 
@@ -122,10 +144,11 @@ The application uses two main models:
 ├── server_actions/
 │   └── todos.ts           # Todo CRUD server actions
 ├── prisma/
-│   └── schema.prisma      # Database schema
+│   └── schema.prisma      # Database schema (or lib/db/schema.prisma)
 ├── messages/              # Translation files
-│   ├── en.json
-│   └── el.json
+│   ├── en.json            # English translations
+│   ├── el.json            # Greek translations
+│   └── es.json            # Spanish translations
 └── types/                 # TypeScript definitions
 ```
 

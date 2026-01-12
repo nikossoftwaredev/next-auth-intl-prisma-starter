@@ -23,9 +23,7 @@ export const TodoList = () => {
 
   const fetchTodos = useCallback(async () => {
     const result = await getTodos();
-    if (result.success) {
-      setTodos(result.todos);
-    }
+    if (result.success) setTodos(result.todos);
     setLoading(false);
   }, []);
 

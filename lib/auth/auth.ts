@@ -48,19 +48,16 @@ export const authOptions: NextAuthOptions = {
           where: { email: session.user.email },
           select: { id: true, email: true, name: true, image: true },
         });
-        if (dbUser) {
+        if (dbUser)
           session.user = {
             ...session.user,
             id: dbUser.id,
           };
-        }
       }
       return session;
     },
     async jwt({ token, account, profile }) {
-      if (account) {
-        token.accessToken = account.access_token;
-      }
+      if (account) token.accessToken = account.access_token;
       return token;
     },
   },

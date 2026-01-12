@@ -70,7 +70,32 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
   - Use `const functionName = () => {}` for all functions
   - Use `const functionName = async () => {}` for async functions
   - Use arrow functions for all callbacks, event handlers, and utility functions
-- **Single-line if statements** - Remove braces for single-line conditions
+- **If/Else Statement Formatting**:
+  - **Single-line if statements** - Remove braces for single-line conditions
+  - **If-else consistency** - Match the formatting between if and else:
+    - If both are single-line: No braces for either
+    - If one is multi-line: Use braces for both
+  - Examples:
+    ```typescript
+    // ✅ GOOD - Both single-line, no braces
+    if (condition) doSomething();
+    else doSomethingElse();
+
+    // ✅ GOOD - One is multi-line, both use braces
+    if (condition) {
+      doSomething();
+      doMore();
+    } else {
+      doSomethingElse();
+    }
+
+    // ❌ BAD - Inconsistent formatting
+    if (condition) doSomething();
+    else {
+      doSomethingElse();
+      doMore();
+    }
+    ```
 - **Object parameters** - Use for functions with more than 2 parameters
 - **Static objects** - Define outside components to prevent recreation
 
@@ -182,4 +207,4 @@ After completing work on any file:
 - **PNPM Required**: This project uses PNPM workspaces
 - **Locale Validation**: Layout validates locale and returns 404 for invalid locales
 - **Static Generation**: Uses `generateStaticParams()` for all locale variants
-- **Prisma Not Implemented**: Despite the project name, Prisma is not yet configured
+- **Prisma Setup**: Connected to Supabase PostgreSQL database with User and Todo models

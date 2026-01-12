@@ -1,35 +1,27 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { ProfileAvatar } from "@/components/auth/profile-avatar";
+import { LogIn } from "lucide-react";
 
 export const LoginButton = () => {
   const { data: session, status } = useSession();
 
   if (status === "loading") {
     return (
-      <Button variant="outline" disabled>
-        Loading...
+      <Button variant="outline" size="icon" disabled>
+        <LogIn className="h-4 w-4" />
       </Button>
     );
   }
 
-  if (session) {
-    return (
-      <div className="flex items-center gap-4">
-        <span className="text-sm text-muted-foreground">
-          Signed in as {session.user?.email}
-        </span>
-        <Button variant="outline" onClick={() => signOut()}>
-          Sign out
-        </Button>
-      </div>
-    );
-  }
+  if (session?.user) return <ProfileAvatar user={session.user} />;
 
   return (
-    <Button onClick={() => signIn("google")}>
-      Sign in with Google
+    <Button onClick={() => signIn("google")} size="sm" className="gap-2">
+      <LogIn className="h-4 w-4" />
+      <span className="hidden sm:inline">Sign in</span>
     </Button>
   );
 };

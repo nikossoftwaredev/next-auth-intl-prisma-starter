@@ -8,9 +8,7 @@ import { revalidatePath } from "next/cache";
 export const createTodo = async (title: string, description?: string) => {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-  }
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
   try {
     const todo = await prisma.todo.create({
@@ -39,9 +37,7 @@ export const updateTodo = async (
 ) => {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-  }
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
   try {
     // First check if the todo belongs to the user
@@ -52,9 +48,8 @@ export const updateTodo = async (
       },
     });
 
-    if (!existingTodo) {
+    if (!existingTodo)
       return { success: false, error: "Todo not found or unauthorized" };
-    }
 
     const todo = await prisma.todo.update({
       where: { id },
@@ -72,9 +67,7 @@ export const updateTodo = async (
 export const deleteTodo = async (id: string) => {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-  }
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
   try {
     // First check if the todo belongs to the user
@@ -85,9 +78,8 @@ export const deleteTodo = async (id: string) => {
       },
     });
 
-    if (!existingTodo) {
+    if (!existingTodo)
       return { success: false, error: "Todo not found or unauthorized" };
-    }
 
     await prisma.todo.delete({
       where: { id },
@@ -104,9 +96,8 @@ export const deleteTodo = async (id: string) => {
 export const getTodos = async () => {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
+  if (!session?.user?.id)
     return { success: false, error: "Unauthorized", todos: [] };
-  }
 
   try {
     const todos = await prisma.todo.findMany({
@@ -128,9 +119,7 @@ export const getTodos = async () => {
 export const toggleTodoComplete = async (id: string) => {
   const session = await getServerSession(authOptions);
 
-  if (!session?.user?.id) {
-    throw new Error("Unauthorized");
-  }
+  if (!session?.user?.id) throw new Error("Unauthorized");
 
   try {
     // First get the current todo state
@@ -141,9 +130,8 @@ export const toggleTodoComplete = async (id: string) => {
       },
     });
 
-    if (!existingTodo) {
+    if (!existingTodo)
       return { success: false, error: "Todo not found or unauthorized" };
-    }
 
     const todo = await prisma.todo.update({
       where: { id },

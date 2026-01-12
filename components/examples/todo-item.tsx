@@ -36,15 +36,14 @@ export const TodoItem = ({ todo, onUpdate }: TodoItemProps) => {
     setIsUpdating(true);
     try {
       const result = await toggleTodoComplete(todo.id);
-      if (result.success) {
+      if (result.success)
         onUpdate();
-      } else {
+      else
         toast({
           title: "Error",
           description: result.error || "Failed to update todo",
           variant: "destructive",
         });
-      }
     } catch (error) {
       toast({
         title: "Error",
@@ -68,13 +67,12 @@ export const TodoItem = ({ todo, onUpdate }: TodoItemProps) => {
           title: "Success",
           description: "Todo deleted successfully",
         });
-      } else {
+      } else
         toast({
           title: "Error",
           description: result.error || "Failed to delete todo",
           variant: "destructive",
         });
-      }
     } catch (error) {
       toast({
         title: "Error",
@@ -102,13 +100,12 @@ export const TodoItem = ({ todo, onUpdate }: TodoItemProps) => {
           title: "Success",
           description: "Todo updated successfully",
         });
-      } else {
+      } else
         toast({
           title: "Error",
           description: result.error || "Failed to update todo",
           variant: "destructive",
         });
-      }
     } catch (error) {
       toast({
         title: "Error",
@@ -126,7 +123,7 @@ export const TodoItem = ({ todo, onUpdate }: TodoItemProps) => {
     setEditDescription(todo.description || "");
   };
 
-  if (isEditing) {
+  if (isEditing)
     return (
       <Card className="p-4 space-y-3">
         <Input
@@ -164,7 +161,6 @@ export const TodoItem = ({ todo, onUpdate }: TodoItemProps) => {
         </div>
       </Card>
     );
-  }
 
   return (
     <Card className="p-4">

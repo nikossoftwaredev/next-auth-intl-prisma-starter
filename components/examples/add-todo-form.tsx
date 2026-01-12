@@ -33,13 +33,12 @@ export const AddTodoForm = ({ onTodoAdded }: AddTodoFormProps) => {
           title: "Success",
           description: "Todo created successfully",
         });
-      } else {
+      } else
         toast({
           title: "Error",
           description: result.error || "Failed to create todo",
           variant: "destructive",
         });
-      }
     } catch (error) {
       toast({
         title: "Error",
@@ -65,7 +64,7 @@ export const AddTodoForm = ({ onTodoAdded }: AddTodoFormProps) => {
         value={description}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value)}
         disabled={isSubmitting}
-        className="min-h-[80px]"
+        className="min-h-20"
       />
       <Button
         type="submit"
