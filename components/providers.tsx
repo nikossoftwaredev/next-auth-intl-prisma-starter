@@ -3,6 +3,7 @@
 import { NextIntlClientProvider, AbstractIntlMessages } from "next-intl";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
+import { Toaster } from "@/components/ui/sonner";
 
 type Props = {
   children: React.ReactNode;
@@ -21,6 +22,7 @@ export const Providers = ({ children, messages, locale }: Props) => {
       >
         <NextIntlClientProvider messages={messages} locale={locale}>
           {children}
+          <Toaster />
         </NextIntlClientProvider>
       </NextThemesProvider>
     </SessionProvider>

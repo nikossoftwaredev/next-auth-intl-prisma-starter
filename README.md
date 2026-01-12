@@ -1,36 +1,216 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js Auth + Internationalization + Prisma Starter
+
+A modern full-stack application built with Next.js 16, NextAuth.js, Prisma ORM, and next-intl for internationalization.
+
+## Features
+
+- ✅ **Authentication** with NextAuth.js (Google OAuth)
+- ✅ **Database** integration with Prisma ORM (PostgreSQL)
+- ✅ **Internationalization** with next-intl (English & Greek)
+- ✅ **Todo CRUD** functionality with user-specific data
+- ✅ **Dark Mode** support with next-themes
+- ✅ **UI Components** from shadcn/ui
+- ✅ **TypeScript** with strict mode
+- ✅ **Server Actions** for secure database operations
+
+## Prerequisites
+
+- Node.js 18+
+- PNPM (required package manager)
+- PostgreSQL database
 
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <your-repo-url>
+cd next-auth-intl-prisma-starter
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 3. Set up environment variables
 
-## Learn More
+Create a `.env.local` file in the root directory:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/database_name?schema=public"
+DIRECT_URL="postgresql://username:password@localhost:5432/database_name?schema=public"
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# NextAuth.js
+NEXTAUTH_SECRET="your-secret-key-here" # Generate with: openssl rand -base64 32
+NEXTAUTH_URL="http://localhost:3000"
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Google OAuth
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+```
 
-## Deploy on Vercel
+### 4. Set up Google OAuth
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Go to [Google Cloud Console](https://console.developers.google.com/apis/credentials)
+2. Create a new OAuth 2.0 Client ID (or use existing)
+3. Add authorized redirect URIs:
+   - Development: `http://localhost:3000/api/auth/callback/google`
+   - Production: `https://your-domain.com/api/auth/callback/google`
+4. Copy the Client ID and Client Secret to your `.env.local`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 5. Set up the database
+
+#### Option A: Use a local PostgreSQL database
+
+1. Install PostgreSQL if not already installed
+2. Create a new database
+3. Update the `DATABASE_URL` in `.env.local`
+
+#### Option B: Use a hosted database service
+
+Popular options:
+- [Neon](https://neon.tech) - Serverless Postgres
+- [Supabase](https://supabase.com) - Postgres with additional features
+- [Railway](https://railway.app) - Simple deployment platform
+- [PlanetScale](https://planetscale.com) - MySQL-compatible (requires changing provider in schema.prisma)
+
+### 6. Initialize Prisma and create database tables
+
+```bash
+# Generate Prisma Client
+pnpm prisma generate
+
+# Create database tables
+pnpm prisma db push
+
+# (Optional) Open Prisma Studio to view your database
+pnpm prisma studio
+```
+
+### 7. Run the development server
+
+```bash
+pnpm dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser.
+
+## Database Schema
+
+The application uses two main models:
+
+- **User**: Stores authenticated user information from Google OAuth
+- **Todo**: Stores user-specific todo items with title, description, and completion status
+
+## Project Structure
+
+```
+├── app/                    # Next.js app directory
+│   ├── [locale]/          # Locale-based routing
+│   └── api/auth/          # NextAuth API routes
+├── components/
+│   ├── ui/                # shadcn/ui components
+│   ├── auth/              # Authentication components
+│   └── examples/          # Todo CRUD components
+├── lib/
+│   ├── auth/              # NextAuth configuration
+│   ├── i18n/              # Internationalization config
+│   └── prisma.ts          # Prisma client singleton
+├── server_actions/
+│   └── todos.ts           # Todo CRUD server actions
+├── prisma/
+│   └── schema.prisma      # Database schema
+├── messages/              # Translation files
+│   ├── en.json
+│   └── el.json
+└── types/                 # TypeScript definitions
+```
+
+## Available Scripts
+
+```bash
+pnpm dev          # Start development server
+pnpm build        # Build for production
+pnpm start        # Start production server
+pnpm lint         # Run ESLint
+pnpm tsc --noEmit # Type check
+
+# Prisma commands
+pnpm prisma generate     # Generate Prisma Client
+pnpm prisma db push      # Push schema changes to database
+pnpm prisma db pull      # Pull schema from database
+pnpm prisma migrate dev  # Create and apply migrations (development)
+pnpm prisma migrate deploy # Apply migrations (production)
+pnpm prisma studio       # Open Prisma Studio GUI
+```
+
+## Deployment
+
+### Database Migration
+
+For production deployments, use migrations instead of `db push`:
+
+```bash
+# Create a migration
+pnpm prisma migrate dev --name init
+
+# Deploy migrations in production
+pnpm prisma migrate deploy
+```
+
+### Environment Variables
+
+Make sure to set all required environment variables in your deployment platform:
+
+- `DATABASE_URL` - Production database connection string (pooled connection)
+- `DIRECT_URL` - Direct database connection string (non-pooled, for migrations)
+- `NEXTAUTH_SECRET` - Strong secret key (different from development)
+- `NEXTAUTH_URL` - Your production URL
+- `GOOGLE_CLIENT_ID` - Same as development or production-specific
+- `GOOGLE_CLIENT_SECRET` - Same as development or production-specific
+
+Note: For services like Supabase or PlanetScale, `DATABASE_URL` is typically the pooled connection URL, while `DIRECT_URL` is the direct connection URL used for migrations.
+
+### Deployment Platforms
+
+This app can be deployed to:
+- [Vercel](https://vercel.com) - Recommended for Next.js apps
+- [Netlify](https://netlify.com)
+- [Railway](https://railway.app)
+- Any platform supporting Node.js
+
+## Troubleshooting
+
+### Database Connection Issues
+
+If you encounter connection issues:
+
+1. Verify your `DATABASE_URL` is correct
+2. Ensure PostgreSQL is running
+3. Check firewall/network settings
+4. For SSL connections, add `?sslmode=require` to the connection string
+
+### Prisma Client Generation
+
+If TypeScript can't find Prisma types:
+
+```bash
+pnpm prisma generate
+```
+
+### Google OAuth Issues
+
+- Ensure redirect URIs match exactly (including trailing slashes)
+- Check that your Google Cloud project has the necessary APIs enabled
+- Verify client ID and secret are correct
+
+## License
+
+MIT
+
+## Contributing
+
+Pull requests are welcome! Please check existing issues before submitting new ones.
