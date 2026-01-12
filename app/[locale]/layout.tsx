@@ -3,10 +3,10 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { setRequestLocale, getMessages } from "next-intl/server";
 import { Roboto } from "next/font/google";
-import { routing } from "@/i18n/routing";
+import { routing } from "@/lib/i18n/routing";
 import { Providers } from "@/components/providers";
 import { BaseLayoutProps } from "@/types/page-props";
-import "../globals.css";
+import "./globals.css";
 
 const roboto = Roboto({
   variable: "--font-roboto",

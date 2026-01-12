@@ -30,7 +30,8 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
 ### Project Structure
 - `app/[locale]/` - Dynamic locale-based routing
 - `components/ui/` - shadcn/ui components
-- `i18n/` - Internationalization configuration
+- `lib/i18n/` - Internationalization configuration
+- `lib/general/` - General utilities (utils.ts)
 - `messages/` - Translation files (en.json, el.json)
 - `proxy.ts` - Middleware for i18n routing (not middleware.ts)
 - `types/` - Shared TypeScript interfaces
@@ -41,13 +42,13 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
 - All pages/layouts receive `params: Promise<{ locale: string }>`
 - Server components: Use `await getTranslations()` with `setRequestLocale(locale)`
 - Type-safe translations via `global.d.ts`
-- Navigation helpers in `i18n/navigation.ts` (Link, redirect, useRouter)
+- Navigation helpers in `lib/i18n/navigation.ts` (Link, redirect, useRouter)
 
 #### Component Development
 - Default to Server Components, use "use client" only when needed
 - Always await params in pages/layouts (Next.js 16 requirement)
 - Use `@/` path alias for imports
-- Utility function `cn()` in `lib/utils.ts` for merging Tailwind classes
+- Utility function `cn()` in `@/lib/general/utils.ts` for merging Tailwind classes
 
 #### Styling
 - CSS variables defined in `app/globals.css`
@@ -61,7 +62,10 @@ npx shadcn@latest add <component>  # Add new shadcn/ui components
 - **Always use pnpm** - Never use npm or yarn
 
 ### Code Style
-- **Always use arrow functions** - No function declarations
+- **ALWAYS use arrow functions** - Never use function declarations or function expressions
+  - Use `const functionName = () => {}` for all functions
+  - Use `const functionName = async () => {}` for async functions
+  - Use arrow functions for all callbacks, event handlers, and utility functions
 - **Single-line if statements** - Remove braces for single-line conditions
 - **Object parameters** - Use for functions with more than 2 parameters
 - **Static objects** - Define outside components to prevent recreation
